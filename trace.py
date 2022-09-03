@@ -26,6 +26,8 @@ if __name__ == '__main__':
 
         bpf.attach_kprobe(event='__page_cache_alloc', fn_name='trace_req_start')
         bpf.detach_kprobe(event='__page_cache_alloc', fn_name='trace_req_done')
+        bpf.attach_kprobe(event='__page_cache_alloc_readahead', fn_name='trace_req_start')
+        bpf.detach_kprobe(event='__page_cache_alloc_readahead', fn_name='trace_req_done')
 
         write = []
 
