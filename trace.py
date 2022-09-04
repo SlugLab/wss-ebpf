@@ -5,7 +5,7 @@ import signal
 import sys
 
 class ReqData:
-    __slots__ = ['timestamp', 'sys_num', 'type', 'flag', 'len', 'issue', 'complete']
+    __slots__ = ['timestamp','count', 'flag', 'complete']
 
     def __init__(self, other):
         for name in self.__slots__:
@@ -25,9 +25,9 @@ if __name__ == '__main__':
         bpf = BPF(text=program)
 
         bpf.attach_kprobe(event='__page_cache_alloc', fn_name='trace_req_start')
-        bpf.detach_kprobe(event='__page_cache_alloc', fn_name='trace_req_done')
-        bpf.attach_kprobe(event='__page_cache_alloc_readahead', fn_name='trace_req_start')
-        bpf.detach_kprobe(event='__page_cache_alloc_readahead', fn_name='trace_req_done')
+        bpf.attach_kretprobe(event='__page_cache_alloc', fn_name='trace_req_done')
+        # bpf.attach_kprobe(event='__page_cache_alloc_readahead', fn_name='trace_req_start')
+        # bpf.attach_kretprobe(event='__page_cache_alloc_readahead', fn_name='trace_req_done')
 
         write = []
 
